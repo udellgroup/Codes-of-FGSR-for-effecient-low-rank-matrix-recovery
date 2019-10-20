@@ -1,6 +1,7 @@
 clc
 clear all
 %%
+for j=1:10
 load('movielens1M.mat');%%% 6000 users on 4000 movies
 M_org=double(X~=0);
 maxdim=sum(M_org(:))/prod(size(M_org))*min(size(M_org))
@@ -24,7 +25,7 @@ end
 %
 M=M_t.*M_org;
 Xm=X.*M;
-vd=[10 20 30];
+vd=[20];
 for pp=1:length(vd)
     d=vd(pp);% initial rank
 %% F-nuclear norm
@@ -52,12 +53,13 @@ for i=1:length(Xr)
     if ~isempty(Xr{i})
     MM=(~M).*M_org;
     E=(Xr{i}-X).*MM;
-    NMAE(pp,i)=sum(abs(E(:)))/sum(MM(:))/4;
-    RMSE(pp,i)=norm(E,'fro')/norm(X.*MM,'fro');
+    NMAE(pp,i,j)=sum(abs(E(:)))/sum(MM(:))/4;
+    RMSE(pp,i,j)=norm(E,'fro')/norm(X.*MM,'fro');
     %RMSE_A(pp,i)=(sum(abs(E(:).^2))/sum(MM(:)))^0.5;
     end
 end
 %
+end
 end
 
 
